@@ -1,0 +1,1390 @@
+{
+  "version": "1.13",
+  "settings": {
+    "defaultLanguage": "en",
+    "languages": [
+      "en"
+    ],
+    "description": "",
+    "id": "4a073b30-570e-459b-8577-aa1053195523",
+    "inactivityTimeout": 30,
+    "botVariables": [],
+    "userVariables": [],
+    "nodeRepetitionLimit": 10,
+    "configVariables": {},
+    "cognitiveConfigs": {
+      "openAi": {}
+    },
+    "useClient": true,
+    "useLlmz": true,
+    "defaultBestModel": "openai__gpt-4o-2024-08-06",
+    "defaultFastModel": "openai__gpt-4o-mini-2024-07-18",
+    "llmzVersion": "01-Oct-2024",
+    "autonomousModel": "openai__gpt-4o-2024-08-06"
+  },
+  "flows": [
+    {
+      "id": "wf-error",
+      "name": "Error",
+      "startNode": "nd-98dc0bcc87",
+      "variables": [],
+      "links": [
+        {
+          "id": "edg-1cb5862648",
+          "source": "nd-98dc0bcc87",
+          "sourcePort": "trs-02c7129430",
+          "target": "nd-58fca56e01"
+        },
+        {
+          "id": "edg-1c28c96d6a",
+          "source": "nd-58fca56e01",
+          "sourcePort": "nd-58fca56e01",
+          "target": "nd-e05f59dd66"
+        }
+      ],
+      "nodes": [
+        {
+          "comment": "<p><strong><span style=\"font-size: 18px\">⛔️ When something goes wrong</span></strong></p><p><br>This workflow is executed when there's an <strong>unexpected error</strong> in one of the other workflows.</p><p></p><p>You can use this to inform the user of the situation before ending the conversation.</p>",
+          "type": "comment",
+          "id": "nd-8ff3d7d295",
+          "name": "Comment1",
+          "deletable": true,
+          "instructions": [],
+          "height": 148,
+          "width": 401,
+          "x": 90,
+          "y": -45
+        },
+        {
+          "instructions": [
+            {
+              "id": "ins-2762f70004",
+              "type": "content",
+              "content": {
+                "type": "text",
+                "text": {
+                  "staticValue": "Sorry, an error occurred. Please try again later",
+                  "dynamicValue": "",
+                  "valueType": "static"
+                },
+                "typing": {
+                  "valueType": "static",
+                  "staticValue": true
+                }
+              },
+              "nodeId": "nd-58fca56e01",
+              "transitions": []
+            }
+          ],
+          "defaultTransition": {
+            "targetNodeId": "nd-e05f59dd66"
+          },
+          "type": "standard",
+          "id": "nd-58fca56e01",
+          "name": "Handler",
+          "deletable": true,
+          "x": 450,
+          "y": 120
+        },
+        {
+          "id": "nd-98dc0bcc87",
+          "name": "On_Error",
+          "type": "entry",
+          "deletable": false,
+          "variables": [],
+          "instructions": [
+            {
+              "id": "trs-02c7129430",
+              "type": "transition",
+              "condition": {
+                "type": "expression",
+                "payload": "true"
+              },
+              "destination": {
+                "node": "nd-58fca56e01"
+              },
+              "transitions": [],
+              "nodeId": "nd-98dc0bcc87"
+            }
+          ],
+          "x": 90,
+          "y": 120
+        },
+        {
+          "id": "nd-e05f59dd66",
+          "name": "End",
+          "type": "end",
+          "variables": [],
+          "deletable": false,
+          "instructions": [
+            {
+              "id": "trs-945140a646",
+              "type": "transition",
+              "condition": {
+                "type": "expression",
+                "payload": "true"
+              },
+              "destination": {
+                "node": "END"
+              },
+              "transitions": [],
+              "nodeId": "nd-e05f59dd66"
+            }
+          ],
+          "x": 810,
+          "y": 120
+        }
+      ]
+    },
+    {
+      "id": "wf-timeout",
+      "name": "Timeout",
+      "startNode": "nd-9f7f3268ac",
+      "variables": [],
+      "links": [
+        {
+          "id": "edg-b0d2adcd13",
+          "source": "nd-e6c012a652",
+          "sourcePort": "nd-e6c012a652",
+          "target": "nd-199fdcf439"
+        },
+        {
+          "id": "edg-6d17a0591b",
+          "source": "nd-9f7f3268ac",
+          "sourcePort": "trs-0c7a9a0003",
+          "target": "nd-e6c012a652"
+        }
+      ],
+      "nodes": [
+        {
+          "instructions": [],
+          "defaultTransition": {
+            "targetNodeId": "nd-199fdcf439"
+          },
+          "type": "standard",
+          "id": "nd-e6c012a652",
+          "name": "Handler",
+          "deletable": true,
+          "x": 435,
+          "y": 105
+        },
+        {
+          "comment": "<p><strong><span style=\"font-size: 18px\">⌛️ When conversation times out</span></strong></p><p><br>This workflow is executed when the conversation <strong>times out</strong> before it had time to flow to an <strong>End Node</strong>.</p><p></p><p>The <strong>Timeout Delay</strong> is configurable in the <strong>Chatbot Settings.</strong></p><p></p><p>You can use this to inform the user of the situation before ending the conversation.</p>",
+          "type": "comment",
+          "id": "nd-441efa6c42",
+          "name": "Comment1",
+          "deletable": true,
+          "instructions": [],
+          "height": 173,
+          "width": 401,
+          "x": 105,
+          "y": -90
+        },
+        {
+          "id": "nd-9f7f3268ac",
+          "name": "On_Timeout",
+          "type": "entry",
+          "deletable": false,
+          "variables": [],
+          "instructions": [
+            {
+              "id": "trs-0c7a9a0003",
+              "type": "transition",
+              "condition": {
+                "type": "expression",
+                "payload": "true"
+              },
+              "destination": {
+                "node": "nd-e6c012a652"
+              },
+              "transitions": [],
+              "nodeId": "nd-9f7f3268ac"
+            }
+          ],
+          "x": 100,
+          "y": 100
+        },
+        {
+          "id": "nd-199fdcf439",
+          "name": "End",
+          "type": "end",
+          "variables": [],
+          "deletable": false,
+          "instructions": [
+            {
+              "id": "trs-bf76943d55",
+              "type": "transition",
+              "condition": {
+                "type": "expression",
+                "payload": "true"
+              },
+              "destination": {
+                "node": "END"
+              },
+              "transitions": [],
+              "nodeId": "nd-199fdcf439"
+            }
+          ],
+          "x": 795,
+          "y": 105
+        }
+      ]
+    },
+    {
+      "id": "wf-conversation-end",
+      "name": "Conversation End",
+      "startNode": "nd-c0d3bd2c92",
+      "variables": [],
+      "links": [
+        {
+          "id": "edg-3cb8028ff6",
+          "source": "nd-c0d3bd2c92",
+          "sourcePort": "trs-92c6f93b0c",
+          "target": "nd-2db7499cc6"
+        },
+        {
+          "id": "edg-8a88f687a0",
+          "source": "nd-2db7499cc6",
+          "sourcePort": "nd-2db7499cc6",
+          "target": "nd-d0c2a6be81"
+        }
+      ],
+      "nodes": [
+        {
+          "instructions": [],
+          "defaultTransition": {
+            "targetNodeId": "nd-d0c2a6be81"
+          },
+          "type": "standard",
+          "id": "nd-2db7499cc6",
+          "name": "Handler",
+          "deletable": true,
+          "x": 420,
+          "y": 105
+        },
+        {
+          "comment": "<p><strong><span style=\"font-size: 18px\">👋 Before Conversation Ends</span></strong></p><p><br>This workflow is executed when right before the conversation <strong>Ends Explicitly.</strong></p><p></p><p>An <strong>Explicit Ending</strong> happens when a workflow transitions on an <strong>End Node</strong>.</p>",
+          "type": "comment",
+          "id": "nd-6d5d3f41dd",
+          "name": "Comment1",
+          "deletable": true,
+          "instructions": [],
+          "height": 148,
+          "width": 461,
+          "x": 105,
+          "y": -45
+        },
+        {
+          "id": "nd-c0d3bd2c92",
+          "name": "On_Explicit_Ending",
+          "type": "entry",
+          "deletable": false,
+          "variables": [],
+          "instructions": [
+            {
+              "id": "trs-92c6f93b0c",
+              "type": "transition",
+              "condition": {
+                "type": "expression",
+                "payload": "true"
+              },
+              "destination": {
+                "node": "nd-2db7499cc6"
+              },
+              "transitions": [],
+              "nodeId": "nd-c0d3bd2c92"
+            }
+          ],
+          "x": 100,
+          "y": 100
+        },
+        {
+          "id": "nd-d0c2a6be81",
+          "name": "End",
+          "type": "end",
+          "variables": [],
+          "deletable": false,
+          "instructions": [
+            {
+              "id": "trs-7004dbb2b6",
+              "type": "transition",
+              "condition": {
+                "type": "expression",
+                "payload": "true"
+              },
+              "destination": {
+                "node": "END"
+              },
+              "transitions": [],
+              "nodeId": "nd-d0c2a6be81"
+            }
+          ],
+          "x": 780,
+          "y": 105
+        }
+      ]
+    },
+    {
+      "topicId": "tpc-global",
+      "id": "wf-main",
+      "name": "Main",
+      "startNode": "nd-2bb9db230d",
+      "variables": [],
+      "links": [],
+      "nodes": [
+        {
+          "id": "nd-2bb9db230d",
+          "name": "Start",
+          "type": "start",
+          "deletable": false,
+          "instructions": [
+            {
+              "id": "trs-8b0779edc5",
+              "type": "transition",
+              "condition": {
+                "type": "expression",
+                "payload": "true"
+              },
+              "destination": {
+                "node": "nd-04777845bd"
+              },
+              "transitions": [],
+              "nodeId": "nd-2bb9db230d"
+            }
+          ],
+          "x": -390,
+          "y": -555,
+          "kbPriority": {
+            "enabled": true,
+            "searchScope": "specific",
+            "kbs": [
+              "kb-2f0a7ea639"
+            ]
+          }
+        },
+        {
+          "id": "nd-80ac4ff158",
+          "name": "End",
+          "type": "end",
+          "deletable": false,
+          "instructions": [
+            {
+              "id": "trs-0260f5e672",
+              "type": "transition",
+              "condition": {
+                "type": "expression",
+                "payload": "true"
+              },
+              "destination": {
+                "node": null
+              },
+              "transitions": [],
+              "nodeId": "nd-80ac4ff158"
+            }
+          ],
+          "x": 465,
+          "y": 45
+        },
+        {
+          "type": "autonomous",
+          "deletable": true,
+          "x": 0,
+          "y": -600,
+          "instructions": [
+            {
+              "name": "extractImageContent",
+              "title": "Extract Content from Image",
+              "description": "Extracts text content and descriptions from an image",
+              "input": {
+                "_def": {
+                  "unknownKeys": "strip",
+                  "catchall": {
+                    "_def": {
+                      "typeName": "ZodNever"
+                    }
+                  },
+                  "typeName": "ZodObject"
+                },
+                "_cached": null
+              },
+              "output": {
+                "_def": {
+                  "type": {
+                    "_def": {
+                      "innerType": {
+                        "_def": {
+                          "checks": [],
+                          "typeName": "ZodString",
+                          "coerce": false
+                        }
+                      },
+                      "typeName": "ZodOptional",
+                      "description": "The content of the images"
+                    }
+                  },
+                  "typeName": "ZodPromise"
+                }
+              },
+              "id": "ins-4efef94382",
+              "label": "Extract Content from Image",
+              "type": "autonomous",
+              "toolType": "agent",
+              "category": "Agents",
+              "agentId": "VisionAgent",
+              "toolId": "extractImageContent",
+              "nodeId": "nd-04777845bd",
+              "manualFields": [],
+              "imageUrl": "",
+              "transitions": []
+            },
+            {
+              "id": "ins-4190c01726",
+              "type": "autonomous",
+              "toolType": "skill",
+              "flowId": "wf-f7a9c0f2a2",
+              "name": "Search",
+              "category": "Flow Logic",
+              "exitNodes": [],
+              "transitions": [],
+              "nodeId": "nd-04777845bd",
+              "manualFields": [
+                "actions.captureScreenshot.enabled",
+                "actions.webSearch.enabled",
+                "actions.browsePages.enabled"
+              ],
+              "variables": [
+                {
+                  "defaultValue": "",
+                  "type": "string",
+                  "name": "query",
+                  "description": "",
+                  "id": "var-17aac9ca74",
+                  "scope": "workflow",
+                  "secret": false,
+                  "value": {
+                    "staticValue": "",
+                    "valueType": "static",
+                    "dynamicValue": ""
+                  }
+                }
+              ]
+            },
+            {
+              "id": "ins-d5ae050ba2",
+              "type": "autonomous",
+              "toolType": "skill",
+              "flowId": "wf-b483a5fc26",
+              "name": "Browse",
+              "category": "Flow Logic",
+              "exitNodes": [],
+              "transitions": [],
+              "nodeId": "nd-04777845bd",
+              "manualFields": [
+                "actions.captureScreenshot.enabled",
+                "actions.webSearch.enabled",
+                "actions.browsePages.enabled"
+              ],
+              "variables": [
+                {
+                  "defaultValue": [],
+                  "arrayType": "string",
+                  "type": "array",
+                  "name": "urls",
+                  "description": "A list of URLs to fetch",
+                  "id": "var-2f2959696e",
+                  "scope": "workflow",
+                  "secret": false,
+                  "value": {
+                    "staticValue": [],
+                    "valueType": "static",
+                    "dynamicValue": ""
+                  }
+                }
+              ]
+            },
+            {
+              "id": "ins-5e25e9e5b7",
+              "type": "autonomous",
+              "toolType": "table",
+              "enabledOperations": {
+                "createRows": {
+                  "valueType": "static",
+                  "staticValue": true,
+                  "dynamicValue": ""
+                },
+                "deleteRows": false,
+                "findRows": true,
+                "updateRows": {
+                  "valueType": "static",
+                  "staticValue": false,
+                  "dynamicValue": ""
+                }
+              },
+              "label": "BoiingPointTable",
+              "category": "Execute",
+              "tableId": "table_01JJGQF1Y58YC8X1M1V9Q1XG44",
+              "nodeId": "nd-04777845bd",
+              "manualFields": [],
+              "transitions": []
+            },
+            {
+              "id": "ins-fb8b34a831",
+              "type": "autonomous",
+              "toolType": "integration",
+              "origin": "integration",
+              "label": "Capture Screenshot",
+              "integrationId": "browser",
+              "actionName": "captureScreenshot",
+              "nodeId": "nd-04777845bd",
+              "manualFields": [
+                "actions.captureScreenshot.enabled",
+                "actions.webSearch.enabled",
+                "actions.browsePages.enabled"
+              ],
+              "url": "",
+              "transitions": []
+            },
+            {
+              "id": "ins-1b88814e65",
+              "type": "autonomous",
+              "toolType": "integration",
+              "origin": "integration",
+              "label": "Line Plot",
+              "integrationId": "charts",
+              "actionName": "generateLinePlot",
+              "nodeId": "nd-04777845bd",
+              "manualFields": [],
+              "transitions": []
+            },
+            {
+              "id": "ins-5da9fa7fd8",
+              "type": "autonomous",
+              "toolType": "integration",
+              "origin": "integration",
+              "label": "Generate Image",
+              "category": "DALL-E Image Generation",
+              "integrationId": "simplygreatbots/dalle",
+              "actionName": "generateImage",
+              "nodeId": "nd-04777845bd",
+              "manualFields": [],
+              "prompt": "",
+              "guidelines": {
+                "valueType": "dynamic",
+                "dynamicValue": "Always generate 1 image at the start of the conversation together with your intro."
+              },
+              "transitions": []
+            }
+          ],
+          "defaultTransition": {
+            "targetNodeId": null
+          },
+          "id": "nd-04777845bd",
+          "name": "Autonomous",
+          "writableVariables": [
+            "var-c97821f420",
+            "var-6d08a8f542"
+          ],
+          "guidelines": {
+            "valueType": "dynamic",
+            "dynamicValue": "You are BotpressGPT, a helpful assistant.\nCurrent date: {{new Date().toLocaleString()}}\n\nImage input capabilities: Enabled\n\n## BrowseAsyncQueue\n\nYou have the tool `SearchAsyncQueue`. Use `SearchAsyncQueue` in the following circumstances:\n    - User is asking about current events or something that requires real-time information (weather, sports scores, etc.)\n    - User is asking about some term you are totally unfamiliar with (it might be new)\n    - User explicitly asks you to browse or provide links to references\n\nGiven a query that requires retrieval, your turn will consist of three steps:\n1. Call the searchAsyncQueue tool to get a list of results.\n2. Call the browseAsyncQueue tool to retrieve a diverse and high-quality subset of these results (in parallel). Remember to SELECT AT LEAST 3 sources when using `browseAsyncQueue`.\n3. Write a response to the user based on these results. In your response, cite sources using the citation format below.\n\nIn some cases, you should repeat step 1 twice, if the initial results are unsatisfactory, and you believe that you can refine the query to get better results.\n\nYou can also open a url directly if one is provided by the user.\n\nFor citing quotes from the 'BrowseAsyncQueue' tool: please render them in valid markdown link format.\n\nYou use a friendly and helpful tone while still being professional.\n\nDecision Tree for GPT Assistant\nRoot Question:\nWhat problem are you solving?\nList problems but let them know these are just examples and they can ask freely as well.\nSmuggling in vehicles\nHospital supply chain security\nUnbribeable systems\nUsing technology to solve these problems\n\nAlways provide button options for all of the alternatives you are providing.\n\nBranch 1: Smuggling in Vehicles\nFollow-up Question 1:\n\"What type of vehicle or transport is involved?\"\n\nAirplanes\nCars\nBoats\nBuses\nOther (Specify)\nFollow-up Question 2:\n\"What part of the process do you want to target?\"\n\nCargo inspection and monitoring\nPassenger screening\nTransit route monitoring\nPreventing insider involvement (e.g., bribed staff)\nFollow-up Question 3 (based on answers):\n\nIf cargo inspection: \"What tools are currently used for inspections? Would you consider upgrading to AI-powered scanners or robotic handling systems?\"\nIf passenger screening: \"Is there a current challenge with manual processes or lack of advanced scanning technologies like facial recognition or biometric checks?\"\nIf transit route monitoring: \"Would you like to explore real-time GPS tracking combined with AI for route anomaly detection?\"\nIf insider involvement: \"What measures are in place for staff oversight? Automation can reduce human touchpoints and minimize corruption opportunities.\"\nFinal Suggestion: Provide a tailored solution based on responses, including the latest techniques such as:\n\nHyperspectral imaging for detailed cargo scans.\nBlockchain for tracking vehicle contents.\nAI to analyze passenger behaviors or detect anomalies.\nBranch 2: Hospital Supply Chain Security\nFollow-up Question 1:\n\"What specific supply chain aspect are you securing?\"\n\nMedical devices and equipment\nPrescription drugs\nBiological samples\nGeneral hospital supplies\nFollow-up Question 2:\n\"What is the primary concern in this area?\"\n\nTheft or loss during transit\nTampering with items\nCounterfeit goods entering the supply chain\nUnauthorized access or distribution\nFollow-up Question 3 (based on answers):\n\nIf theft: \"Would you like to explore secure GPS tracking or automated robotic handlers to eliminate theft opportunities?\"\nIf tampering: \"Would tamper-proof packaging combined with blockchain verification help ensure item integrity?\"\nIf counterfeit goods: \"QR-based digital authentication and immutable records could provide strong counterfeit detection. Would you like to explore this?\"\nIf unauthorized access: \"Would you consider encrypted digital access systems or biometrics for secure handling of supplies?\"\nFinal Suggestion: Provide an actionable solution integrating up-to-date technology, such as:\n\nBlockchain for tracking and authenticating medical goods.\nSecure supply chain automation using robotics and AI.\nBranch 3: Unbribeable Systems\nFollow-up Question 1:\n\"What process or activity are you trying to secure?\"\nList Companies Using Blockchain for General Shipment Tracking and also list Companies that have implemented Blockchain in Pharmaceutical Supply Chains Several  and also list the UN agencies have initiated projects leveraging blockchain to enhance transparency, efficiency, and security in their operations.\n\n\n\nCargo handling and inspections\nCustoms and border checks\nFinancial transactions or approvals\nDelivery and logistics\nFollow-up Question 2:\n\"What current challenges are you facing?\"\n\nManual processes prone to corruption\nLack of transparency in operations\nInsider threats or human intervention\nFollow-up Question 3 (based on answers):\n\nIf manual processes: \"Would robotic handling systems help eliminate human bias or corruption opportunities?\"\nIf lack of transparency: \"Blockchain could provide tamper-proof records of all activities. Would you like to integrate this?\"\nIf insider threats: \"Would real-time AI monitoring and automated decision-making systems reduce these risks?\"\nFinal Suggestion: Provide a tailored response with examples such as:\n\nRobotics for unbribeable handling systems.\nBlockchain for transparent record-keeping.\nAI to monitor and flag irregularities in real-time.\nBranch 4: Use of Technology\nFollow-up Question 1:\n\"What type of technology would you like to explore?\"\n\nAI\nBlockchain\nRobotics\nNanotechnology\nHyperspectral imaging\nFollow-up Question 2:\n\"What problem are you addressing with this technology?\"\n\nDetection and monitoring\nSupply chain integrity\nProcess automation\nMulti-agency collaboration\nFollow-up Question 3 (based on answers):\n\nIf detection and monitoring: \"AI and hyperspectral imaging can flag anomalies. Would you like to explore their deployment at checkpoints?\"\nIf supply chain integrity: \"Blockchain ensures tamper-proof tracking. Would you like to explore this for sensitive goods?\"\nIf process automation: \"Would robotic systems for cargo handling or inspections address your challenges?\"\nIf multi-agency collaboration: \"AI can bridge gaps and streamline communication between agencies. Would you like a system tailored for this?\"\nFinal Suggestion: Propose actionable steps using state-of-the-art solutions such as:\n\nAI-driven detection tools.\nBlockchain for supply chain transparency.\nRobotic systems for automation and efficiency.\nGeneral Follow-Up for Any Branch\nQuestion:\n\"Would you like more detailed guidance or examples of successful implementations in similar scenarios?\"\n\nClosing Suggestion:\nProvide a step-by-step action plan, the latest data collected through an internet search, and potential pitfalls to avoid.\n\n\n\n"
+          },
+          "allowConversation": true
+        },
+        {
+          "type": "comment",
+          "deletable": true,
+          "x": -60,
+          "y": -1005,
+          "instructions": [],
+          "comment": "<p>This Autonomous Agent works like ChatGPT. It can answer your questions and find answers on the web. It also has vision capabilities. Here are a few things you can try:</p><ol><li><p>Try asking it to take a screenshot of your website.</p></li><li><p>Try asking for the weather in your city,</p></li><li><p>Or what's the nearest restaurant from your address,</p></li><li><p>Or send an image url and ask questions about the image.</p></li><li><p>You can also install the DALL-E integration and it can also generate images for you.</p></li><li><p>You can ask it to plot some data in the BoilingPoint table.</p></li></ol><p>Or you can combine all the capabilities at once. You can ask it - \"Can you search the web for 5 elements and their boiling points.\"</p><p><br>Then you can ask it - \"Can you insert them into the table?\"</p><p><br>And finally - \"Can you plot the data on a chart?</p>",
+          "id": "nd-e5910e8ded",
+          "name": "Comment1",
+          "height": 353,
+          "width": 401,
+          "rotation": 0.11630453163715515
+        },
+        {
+          "type": "video",
+          "deletable": true,
+          "instructions": [],
+          "x": -585,
+          "y": -915,
+          "youtubeUrl": "https://www.youtube.com/watch?v=Hyq_Bwn2W5M",
+          "id": "nd-7cb1d81ad1",
+          "name": "Video1"
+        }
+      ],
+      "parentFolder": "root"
+    },
+    {
+      "id": "wf-f7a9c0f2a2",
+      "name": "Search",
+      "startNode": "nd-b738954f75",
+      "variables": [
+        {
+          "defaultValue": "",
+          "type": "string",
+          "name": "query",
+          "description": "",
+          "id": "var-17aac9ca74",
+          "scope": "workflow",
+          "secret": false
+        },
+        {
+          "id": "var-f3173a2c31",
+          "name": "pages",
+          "type": "object",
+          "description": "",
+          "typings": "BrowserWebSearch",
+          "scope": "workflow"
+        }
+      ],
+      "links": [],
+      "nodes": [
+        {
+          "id": "nd-b738954f75",
+          "name": "Entry",
+          "type": "entry",
+          "deletable": false,
+          "variables": [
+            "var-8da98aa528",
+            "var-17aac9ca74"
+          ],
+          "instructions": [
+            {
+              "id": "trs-1f93534064",
+              "type": "transition",
+              "condition": {
+                "type": "expression",
+                "payload": "true"
+              },
+              "destination": {
+                "node": "nd-f3ce571aee"
+              },
+              "transitions": [],
+              "nodeId": "nd-b738954f75"
+            }
+          ],
+          "x": 100,
+          "y": 100
+        },
+        {
+          "id": "nd-cd3f6e93ae",
+          "name": "Exit",
+          "type": "exit",
+          "variables": [
+            "var-64b85248be",
+            "var-f3173a2c31"
+          ],
+          "deletable": false,
+          "instructions": [
+            {
+              "id": "trs-3fa9dc2434",
+              "type": "transition",
+              "condition": {
+                "type": "expression",
+                "payload": "true"
+              },
+              "destination": {
+                "node": "#"
+              },
+              "transitions": [],
+              "nodeId": "nd-cd3f6e93ae"
+            }
+          ],
+          "x": 800,
+          "y": 100
+        },
+        {
+          "type": "standard",
+          "deletable": true,
+          "x": 450,
+          "y": 120,
+          "instructions": [
+            {
+              "id": "ins-97a72522a2",
+              "type": "action",
+              "origin": "integration",
+              "label": "Web Search",
+              "integration": {
+                "id": "browser",
+                "action": "webSearch"
+              },
+              "nodeId": "nd-f3ce571aee",
+              "data": {
+                "query": {
+                  "valueType": "dynamic",
+                  "dynamicValue": "{{workflow.query}}"
+                },
+                "includeSites": {
+                  "valueType": "static",
+                  "staticValue": [],
+                  "dynamicValue": ""
+                },
+                "count": {
+                  "valueType": "static",
+                  "staticValue": 10,
+                  "dynamicValue": ""
+                }
+              },
+              "transpiledCode": "var __defProp = Object.defineProperty;\nvar __name = (target, value) => __defProp(target, \"name\", { value, configurable: true });\nasync function __ROOT__() {\n}\n__name(__ROOT__, \"__ROOT__\");\n; return await __ROOT__();",
+              "outputVariableId": "var-f3173a2c31",
+              "transitions": []
+            }
+          ],
+          "defaultTransition": {
+            "targetNodeId": "nd-cd3f6e93ae"
+          },
+          "id": "nd-f3ce571aee",
+          "name": "Standard1"
+        }
+      ],
+      "parentFolder": "root"
+    },
+    {
+      "id": "wf-b483a5fc26",
+      "name": "Browse",
+      "startNode": "nd-85033754fb",
+      "variables": [
+        {
+          "defaultValue": [],
+          "arrayType": "string",
+          "type": "array",
+          "name": "urls",
+          "description": "A list of URLs to fetch",
+          "id": "var-2f2959696e",
+          "scope": "workflow",
+          "secret": false
+        },
+        {
+          "id": "var-874e9a9ad6",
+          "name": "content",
+          "type": "object",
+          "description": "",
+          "typings": "BrowserBrowsePages",
+          "scope": "workflow"
+        }
+      ],
+      "links": [
+        {
+          "id": "lnk-b29a565a93",
+          "source": "nd-85033754fb",
+          "target": "nd-0e48a86373",
+          "sourcePort": "trs-8fb975d172"
+        }
+      ],
+      "nodes": [
+        {
+          "id": "nd-85033754fb",
+          "name": "Entry",
+          "type": "entry",
+          "deletable": false,
+          "variables": [
+            "var-2f2959696e"
+          ],
+          "instructions": [
+            {
+              "id": "trs-8fb975d172",
+              "type": "transition",
+              "condition": {
+                "type": "expression",
+                "payload": "true"
+              },
+              "destination": {
+                "node": "nd-0e48a86373"
+              },
+              "transitions": [],
+              "nodeId": "nd-85033754fb"
+            }
+          ],
+          "x": 100,
+          "y": 100
+        },
+        {
+          "id": "nd-3d980592b9",
+          "name": "Exit",
+          "type": "exit",
+          "variables": [
+            "var-8516216f62",
+            "var-02d8ea3f74",
+            "var-874e9a9ad6"
+          ],
+          "deletable": false,
+          "instructions": [
+            {
+              "id": "trs-eb05ad3a6b",
+              "type": "transition",
+              "condition": {
+                "type": "expression",
+                "payload": "true"
+              },
+              "destination": {
+                "node": "#"
+              },
+              "transitions": [],
+              "nodeId": "nd-3d980592b9"
+            }
+          ],
+          "x": 800,
+          "y": 100
+        },
+        {
+          "id": "nd-0e48a86373",
+          "name": "Standard",
+          "type": "standard",
+          "deletable": true,
+          "instructions": [
+            {
+              "id": "ins-af30c041b7",
+              "type": "action",
+              "origin": "integration",
+              "label": "Browse Pages",
+              "integration": {
+                "id": "browser",
+                "action": "browsePages"
+              },
+              "category": "Execute",
+              "nodeId": "nd-0e48a86373",
+              "data": {
+                "urls": {
+                  "valueType": "dynamic",
+                  "dynamicValue": "{{workflow.urls}}",
+                  "staticValue": [],
+                  "isExpression": true
+                }
+              },
+              "transpiledCode": "var __defProp = Object.defineProperty;\nvar __name = (target, value) => __defProp(target, \"name\", { value, configurable: true });\nasync function __ROOT__() {\n}\n__name(__ROOT__, \"__ROOT__\");\n; return await __ROOT__();",
+              "outputVariableId": "var-874e9a9ad6",
+              "transitions": []
+            }
+          ],
+          "defaultTransition": {
+            "targetNodeId": "nd-3d980592b9"
+          },
+          "x": 450,
+          "y": 105
+        }
+      ],
+      "parentFolder": "root"
+    }
+  ],
+  "intents": [
+    {
+      "id": "int-cancel",
+      "name": "cancel",
+      "utterances_with_slots": [
+        "cancel",
+        "abort",
+        "abandon",
+        "i want to cancel",
+        "forget about this",
+        "leave",
+        "stop",
+        "quit",
+        "you know what, nevermind",
+        "forget it"
+      ]
+    },
+    {
+      "id": "int-no",
+      "name": "no",
+      "utterances_with_slots": [
+        "no",
+        "i don't want to",
+        "absolutely not",
+        "nah",
+        "nope",
+        "not really",
+        "not sure",
+        "no thanks"
+      ]
+    },
+    {
+      "id": "int-yes",
+      "name": "yes",
+      "utterances_with_slots": [
+        "yes",
+        "yeah",
+        "absolutely",
+        "i'd like to",
+        "sure ",
+        "hmm probably",
+        "yup",
+        "ok"
+      ]
+    }
+  ],
+  "list_entities": [],
+  "pattern_entities": [],
+  "actions": [],
+  "hooks": [
+    {
+      "id": "hk-1wnbr9q",
+      "name": "knowledge-base-table-of-content",
+      "hookType": "before_llmz_execution",
+      "content": "\n// >>>>>>>>>>>>>>>>>>>>>>\n// This hook is generated and managed by the \"agi/kbo\" integration.\n// This hook provides your autonomous nodes with a Table of Contents of the included knowledge of\n// the knowledge bases used in your autonomous nodes (those included on the `search` tool).\n// Do not edit this file manually.\n\nconst searchTools = context.tools.filter((x) => x.name === 'search')\n\nawait Promise.allSettled(searchTools.map(appendSearchToolTableOfContent))\n\nasync function appendSearchToolTableOfContent(search: LLMZ.Tool) {\n  type SearchMetadata = { kbs: string[]; searchScope: 'all' | 'specific' }\n  const meta: SearchMetadata = search.metadata?.kbs ?? {\n    kbs: [],\n    searchScope: 'all'\n  }\n\n  const kbs = meta.searchScope === 'specific' ? meta.kbs : Artifact.knowledge_base.map((x) => x.id)\n\n  const passages = await Promise.allSettled(\n    kbs.map((kbId) =>\n      client.searchFiles({\n        query: event.preview,\n        consolidate: true,\n        contextDepth: 2,\n        limit: 2,\n        tags: {\n          purpose: 'master-summary',\n          kbId\n        }\n      })\n    )\n  ).then((x) => x.flatMap((y) => (y.status === 'fulfilled' ? y.value.passages.map((p) => p.content) : [])))\n\n  if (passages.length) {\n    context.instructions += `## Table of Contents (for tool \\`${search.name}\\`)\n\nThe below is a summary of the knowledge included in the Knowledge Bases (available to you when calling \\`${search.name}\\` tool).\n\n${passages.join('\\n\\n')}\n\n`\n  }\n}\n\n// End of the hook\n// <<<<<<<<<<<<<<<<<<<<\n",
+      "title": "Knowledge Base Table of Content",
+      "description": "Provides a table of content for the enabled Knowledge Bases on the active autonomous nodes.",
+      "origin": {
+        "type": "integration",
+        "integration": {
+          "id": "agi/kbo",
+          "name": "agi/kbo",
+          "version": "1.0.3"
+        }
+      }
+    },
+    {
+      "id": "hk-ml1yq",
+      "name": "conversation-analyzer-track-conversation",
+      "hookType": "after_conversation_end",
+      "content": "\n// >>>>>>>>>>>>>>>>>>>>>>\n// This hook is generated and managed by the \"agi/connor\" integration.\n// This hook tracks your conversations to provide some useful analytics on them. See the Int_Connor_Conversations_Table\n// Do not edit this file manually.\n\n   const { success, error } = await actions['agi/connor'].addOrUpdateConversation({\n    conversationId: event.conversationId,\n    transcript: event.state.session.history.length\n      ? event.state.session.history.map((h) => ({ sender: h.sender, preview: h.preview }))\n      : [{ sender: 'user', preview: event.preview }]\n  })\n\n// End of the hook\n// <<<<<<<<<<<<<<<<<<<<\n",
+      "title": "Track Conversation",
+      "description": "Tracks conversations in a Botpress table for analysis",
+      "origin": {
+        "type": "integration",
+        "integration": {
+          "id": "agi/connor",
+          "name": "agi/connor",
+          "version": "0.1.0"
+        }
+      },
+      "transpiledCode": "var __defProp = Object.defineProperty;\nvar __name = (target, value) => __defProp(target, \"name\", { value, configurable: true });\nasync function __ROOT__() {\n  const { success, error } = await actions[\"agi/connor\"].addOrUpdateConversation({\n    conversationId: event.conversationId,\n    transcript: event.state.session.history.length ? event.state.session.history.map((h) => ({ sender: h.sender, preview: h.preview })) : [{ sender: \"user\", preview: event.preview }]\n  });\n}\n__name(__ROOT__, \"__ROOT__\");\n; return await __ROOT__();"
+    },
+    {
+      "id": "hk-17f531d74b",
+      "name": "Internet_for_good",
+      "content": "",
+      "hookType": "before_incoming_middleware",
+      "origin": {
+        "type": "user"
+      },
+      "transpiledCode": "var __defProp = Object.defineProperty;\nvar __name = (target, value) => __defProp(target, \"name\", { value, configurable: true });\nasync function __ROOT__() {\n  ;\n}\n__name(__ROOT__, \"__ROOT__\");\n; return await __ROOT__();"
+    }
+  ],
+  "qnas": [],
+  "knowledge_base": [
+    {
+      "dataSources": [
+        {
+          "created_on": 1725925298038,
+          "data": {},
+          "disabled": false,
+          "id": "ds-c276c0cfc1",
+          "type": "file-api"
+        }
+      ],
+      "description": "This is about New KB1",
+      "id": "kb-a1f208dfed",
+      "name": "Default Knowledge Base",
+      "parentFolder": "root"
+    }
+  ],
+  "folders": [],
+  "agents": {
+    "SummaryAgent": {
+      "enabled": true,
+      "config": {
+        "summaryMaxTokens": 100,
+        "transcriptMaxLines": 10
+      }
+    },
+    "TranslatorAgent": {
+      "config": {
+        "detectLanguage": true,
+        "detectContinuously": true
+      }
+    },
+    "KnowledgeAgent": {
+      "enabled": false,
+      "config": {
+        "answerManually": true,
+        "context": "Summary of the conversation:\n\"\"\"\n{{conversation.SummaryAgent.summary}}\n\"\"\"\n\nTranscript:\n\"\"\"\n{{conversation.SummaryAgent.transcript}}\n\"\"\"",
+        "bestModel": "gpt-4-turbo",
+        "strategy": "hybrid",
+        "chunks": 50
+      }
+    },
+    "PersonalityAgent": {
+      "enabled": false,
+      "config": {
+        "active": true,
+        "personality": {
+          "valueType": "dynamic",
+          "dynamicValue": "You are a funny clown that adds emojis to all your messages.",
+          "staticValue": ""
+        }
+      }
+    },
+    "VisionAgent": {
+      "enabled": true,
+      "config": {
+        "extractionEnabled": true
+      }
+    },
+    "HITLAgent": {
+      "enabled": false,
+      "config": {
+        "onWaitingForAgentAction": "  sendMessage('Waiting for an agent')",
+        "onAgentAssignedAction": "  sendMessage('You are speaking with ' + agentName + ' (' + agentEmail + ')')",
+        "onInteractionClosedAction": "  sendMessage('Interaction closed by agent')",
+        "onTimedOutWaitingAgentAction": "  sendMessage('Timed out waiting for an agent')",
+        "onUserCancelledAction": "  sendMessage('You have cancelled the escalation')",
+        "queueTimeoutDelay": 10,
+        "transcriptContext": "Channel: {{event.integration}}/{{event.channel}}\n---\nSummary:\n{{conversation.SummaryAgent.summary}}\n---\nTranscript:\n{{conversation.SummaryAgent.transcript}}"
+      }
+    },
+    "RouterAgent": {
+      "enabled": false,
+      "config": {
+        "context": "Summary of the conversation:\n\"\"\"\n{{conversation.SummaryAgent.summary}}\n\"\"\"\n\nTranscript:\n\"\"\"\n{{conversation.SummaryAgent.transcript}}\n\"\"\""
+      }
+    }
+  },
+  "tables": {
+    "table_01JJGQF1Y58YC8X1M1V9Q1XG44": {
+      "id": "table_01JJGQF1Y58YC8X1M1V9Q1XG44",
+      "name": "BoilingPointTable",
+      "factor": 1,
+      "frozen": false,
+      "tags": {},
+      "createdAt": "2025-01-26T07:15:52.901Z",
+      "updatedAt": "2025-01-26T07:15:52.901Z",
+      "createdBy": "user:cf8f06a1-b72f-4ab1-a3d8-92e6e42c1064",
+      "updatedBy": null,
+      "isComputeEnabled": false,
+      "schema": {
+        "type": "object",
+        "x-zui": {},
+        "properties": {
+          "Element": {
+            "type": "string",
+            "x-zui": {
+              "index": 0,
+              "typings": "",
+              "searchable": true
+            },
+            "nullable": true
+          },
+          "BoilingPoint": {
+            "type": "string",
+            "x-zui": {
+              "index": 1,
+              "typings": "",
+              "searchable": true
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": true
+      },
+      "parentFolder": "root",
+      "selectors": []
+    },
+    "table_01JJGQF2312SNZ1PE3FXX8XNKQ": {
+      "id": "table_01JJGQF2312SNZ1PE3FXX8XNKQ",
+      "name": "RouterAgentTable",
+      "factor": 1,
+      "frozen": true,
+      "tags": {
+        "role": "agents/router/intents",
+        "agent": "RouterAgent",
+        "system": "true"
+      },
+      "createdAt": "2025-01-26T07:15:53.057Z",
+      "updatedAt": "2025-01-26T07:15:53.057Z",
+      "createdBy": "user:cf8f06a1-b72f-4ab1-a3d8-92e6e42c1064",
+      "updatedBy": null,
+      "isComputeEnabled": false,
+      "schema": {
+        "type": "object",
+        "x-zui": {},
+        "required": [
+          "phrase",
+          "intentId",
+          "phraseId"
+        ],
+        "properties": {
+          "phrase": {
+            "type": "string",
+            "x-zui": {
+              "index": 0,
+              "searchable": true
+            }
+          },
+          "intentId": {
+            "type": "string",
+            "x-zui": {
+              "index": 1,
+              "searchable": true
+            }
+          },
+          "phraseId": {
+            "type": "string",
+            "x-zui": {
+              "index": 2,
+              "searchable": true
+            }
+          }
+        },
+        "additionalProperties": true
+      },
+      "parentFolder": "root",
+      "selectors": []
+    },
+    "table_01JJGQF50K7PDB4JVAYGYED117": {
+      "id": "table_01JJGQF50K7PDB4JVAYGYED117",
+      "name": "Int_Connor_Conversations_Table",
+      "factor": 30,
+      "frozen": true,
+      "tags": {
+        "origin": "integration",
+        "purpose": "Conversations",
+        "version": "Dec-2024",
+        "integration": "Int_connor",
+        "x-studio-icon": "lucide://MessagesSquare",
+        "x-studio-color": "grass",
+        "x-studio-title": "Conversations",
+        "x-studio-readonly": "true",
+        "x-studio-description": "Table for analyzing conversations"
+      },
+      "createdAt": "2025-01-26T07:15:56.051Z",
+      "updatedAt": "2025-01-26T07:15:56.051Z",
+      "createdBy": "integration:agi/connor",
+      "updatedBy": null,
+      "isComputeEnabled": true,
+      "schema": {
+        "type": "object",
+        "x-zui": {},
+        "required": [
+          "conversationId",
+          "transcript",
+          "summary",
+          "topics",
+          "escalations",
+          "resolved"
+        ],
+        "properties": {
+          "topics": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "x-zui": {}
+            },
+            "x-zui": {
+              "index": 4,
+              "title": "Topics",
+              "computed": {
+                "action": "ai",
+                "prompt": "Identify the topics mentioned by the user in the provided transcript. Focus only on user-initiated topics relevant to their needs (e.g., billing issues, technical troubleshooting, product recommendations, account setup, feature requests, complaints, or cancellation inquiries). \nTranscript:\n\n{{transcript}}",
+                "dependencies": [
+                  "transcript"
+                ]
+              },
+              "searchable": true
+            },
+            "nullable": true,
+            "description": "Optional. An array of topics or themes discussed during the conversation."
+          },
+          "summary": {
+            "type": "string",
+            "x-zui": {
+              "index": 2,
+              "title": "Summary",
+              "computed": {
+                "action": "ai",
+                "prompt": "Summarize the provided transcript.\nHere's the transcript:\n\n{{transcript}}",
+                "dependencies": [
+                  "transcript"
+                ]
+              },
+              "searchable": true
+            },
+            "nullable": true,
+            "description": "A brief summary of the conversation's content."
+          },
+          "resolved": {
+            "type": "boolean",
+            "x-zui": {
+              "index": 6,
+              "title": "Resolved",
+              "computed": {
+                "action": "ai",
+                "prompt": "Based on the transcript decide whether the users queries were resolved or not by the end of the chat. If not resolved respond with `false`.\nHere's the transcript:\n\n{{transcript}}",
+                "dependencies": [
+                  "transcript"
+                ]
+              },
+              "searchable": true
+            },
+            "nullable": true,
+            "description": "A boolean indicating whether the customer's issue was resolved by the end of the chat."
+          },
+          "sentiment": {
+            "enum": [
+              "very positive",
+              "positive",
+              "neutral",
+              "negative",
+              "very negative"
+            ],
+            "type": "string",
+            "x-zui": {
+              "index": 3,
+              "title": "Sentiment",
+              "computed": {
+                "action": "ai",
+                "prompt": "Based on the transcript decide the overall sentiment inferred from the conversation (from the following - very positive, positive, neutral, negative, very negative).\nHere's the transcript:\n\n{{transcript}}",
+                "dependencies": [
+                  "transcript"
+                ]
+              },
+              "searchable": true
+            },
+            "nullable": true,
+            "description": "Optional. The overall sentiment inferred from the conversation (e.g., positive, neutral, negative)."
+          },
+          "transcript": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "x-zui": {},
+              "required": [
+                "sender",
+                "preview"
+              ],
+              "properties": {
+                "sender": {
+                  "enum": [
+                    "bot",
+                    "user"
+                  ],
+                  "type": "string",
+                  "x-zui": {}
+                },
+                "preview": {
+                  "type": "string",
+                  "x-zui": {}
+                }
+              },
+              "additionalProperties": false
+            },
+            "x-zui": {
+              "index": 1,
+              "title": "Transcript",
+              "searchable": true
+            },
+            "description": "The transcript of the conversation, represented as an array of message items."
+          },
+          "escalations": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "x-zui": {}
+            },
+            "x-zui": {
+              "index": 5,
+              "title": "Escalations",
+              "computed": {
+                "action": "ai",
+                "prompt": "Extract the escalations from the provided transcript. An array representing moments when the conversation was escalated to another team member or department.\nHere's the transcript:\n\n{{transcript}}",
+                "dependencies": [
+                  "transcript"
+                ]
+              },
+              "searchable": true
+            },
+            "nullable": true,
+            "description": "Optional. An array representing moments when the conversation was escalated to another team member or department."
+          },
+          "conversationId": {
+            "type": "string",
+            "x-zui": {
+              "index": 0,
+              "title": "Conversation ID",
+              "searchable": true
+            },
+            "description": "A unique identifier for this specific chat session."
+          }
+        },
+        "additionalProperties": true
+      },
+      "parentFolder": "root",
+      "selectors": []
+    }
+  },
+  "schemas": [],
+  "versions": [
+    {
+      "name": "08 Jul 24 03:39",
+      "id": "version_01J29XQ3RJJ33NANDHHA94YEKE"
+    },
+    {
+      "name": "08 Jul 24 03:36",
+      "id": "version_01J29XHDKS5739GPC2QKNBG2NV"
+    },
+    {
+      "name": "08 Jul 24 03:18",
+      "id": "version_01J29WHANSDESSC7WXKP0E14NG"
+    },
+    {
+      "name": "08 Jul 24 03:07",
+      "id": "version_01J29VWH15JZHJNZKCX7Z3MHMN"
+    },
+    {
+      "name": "08 Jul 24 03:00",
+      "id": "version_01J29VG59YAWTBV9D5V78RA882"
+    },
+    {
+      "name": "08 Jul 24 03:00",
+      "id": "version_01J29VFE1HRXDPXGH87J177ZKE"
+    },
+    {
+      "name": "08 Jul 24 02:40",
+      "id": "version_01J29TBGGN85RDZDRCE27XAHKK"
+    },
+    {
+      "name": "08 Jul 24 02:35",
+      "id": "version_01J29T2PMH64Z2NBGNS3R6R467"
+    },
+    {
+      "name": "08 Jul 24 02:33",
+      "id": "version_01J29SYG8X97SJ5TTQD9YMG5Q5"
+    },
+    {
+      "name": "08 Jul 24 02:29",
+      "id": "version_01J29SPPE4633A5K2F566897B0"
+    }
+  ],
+  "revision": 66,
+  "revisionMetadata": {
+    "lastRevisionCheckAt": "2025-01-26T13:44:39.920Z",
+    "lastRevisionId": -1,
+    "multiplayerStatus": "connected",
+    "multiplayerTraces": [
+      "2025-01-26T13:44:42.747Z: initialized -> connecting (ok)",
+      "2025-01-26T13:44:46.039Z (mT1l8xsPs9): connecting -> connected (ok)"
+    ],
+    "players": [
+      "vanessa.m.lindberg@gmail.com / sess_01JJHDPY6M6DV71Y5M7E0K5N1N / Sun, 26 Jan 2025 13:44:46 GMT"
+    ],
+    "savedAt": "2025-01-26T13:44:52.487Z",
+    "savedBy": "vanessa.m.lindberg@gmail.com",
+    "sessionId": "sess_01JJHDPY6M6DV71Y5M7E0K5N1N"
+  },
+  "identity": {
+    "name": "Smuggling and Value Transport Theft guide bot",
+    "manual_instructions": "You are a crime prevention, drug smuggling, other types of smuggling and value transport theft guide. You help admins navigate the best way to set up preventions for all these types of crime.",
+    "icon": {
+      "type": "emoji",
+      "emoji": "🤖 ",
+      "background_color": "var(--orange-5)"
+    },
+    "ai_summary": {
+      "value": "Frisk health assists in crime prevention strategies.",
+      "input_hash": "ld3pbw",
+      "generated_at": "2025-01-26T10:46:10.759Z",
+      "version": "1.0.0"
+    }
+  }
+}

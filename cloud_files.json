@@ -1,0 +1,38 @@
+[
+  {
+    "id": "file_01JJGQF1V3FD0Z355RTKZ6BT4F",
+    "accessPolicies": [
+      "public_content"
+    ],
+    "contentType": "application/javascript",
+    "size": 404,
+    "status": "upload_completed",
+    "tags": {
+      "source": "integration",
+      "summarize": "true",
+      "integrationName": "webchat",
+      "webchatInjectConfigVersion": "1"
+    },
+    "key": "webchatConfigInject.js",
+    "index": false,
+    "updatedAt": "2025-01-26T07:15:52.797Z"
+  },
+  {
+    "id": "file_01JJGQF1QWM0D06600P2AT84VC",
+    "accessPolicies": [
+      "public_content"
+    ],
+    "contentType": "application/json",
+    "size": 381,
+    "status": "upload_completed",
+    "tags": {
+      "source": "integration",
+      "summarize": "true",
+      "integrationName": "webchat",
+      "webchatConfigVersion": "1"
+    },
+    "key": "webchatConfig.json",
+    "index": false,
+    "updatedAt": "2025-01-26T07:15:52.694Z"
+  }
+]
